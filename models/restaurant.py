@@ -12,7 +12,7 @@ class Restaurant:
         Restaurant.restaurants.append(self) # todo restaurante ao ser criado sera colocado diretamente dentro da lista
 
 
-    def __str__(self): # metodo nativo do python (sempre eh com __)
+    def __str__(self): # metodo nativo do python (sempre eh com __) - chama de dunder methods
         return f"{self.name} | {self.category}"
     
     def list_restaurants(): #metodo criado pelo desenvolvdor, nao nativo
