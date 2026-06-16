@@ -22,7 +22,7 @@ class Restaurant:
 
     @property
     def active(self):
-        return '✅ Active' if self._active == True else ' ❌ Not Active'
+        return '✅ Active' if self._active else '❌ Not Active'
 
 restaurant_pizza = Restaurant('Pizza Express', 'Italian')
 restaurant_sushi = Restaurant('MyBox', 'Japanese')
