@@ -152,33 +152,62 @@
 
 # Create 2 accounts, do operations, list them.
 
-class BankAccount:
+# class BankAccount:
 
-    accounts = []
+#     accounts = []
 
-    def __init__(self, account_number: int, owner, balance):
-        self.account_number = account_number
-        self.owner = owner
-        self._balance = balance
-        BankAccount.accounts.append(self)
+#     def __init__(self, account_number: int, owner: str, balance: float):
+#         self.account_number = account_number
+#         self.owner = owner
+#         self._balance = balance
+#         BankAccount.accounts.append(self)
 
-        
-    def __str__(self):
-        return f'Account: {self.account_number} | Owner: {self.owner} | Balance: {self._balance}'
+#     def __str__(self):
+#         return f"Account: {self.account_number} | Owner: {self.owner} | Balance: ${self._balance:,.2f}"
     
-    @property
-    def balance(self):
-        return f"${self._balance:,.2f}"
+#     @property
+#     def balance(self):
+#         return f"${self._balance:,.2f}"
     
-    def withdraw(acc_number, ammount):
-        for account in BankAccount.accounts:
-            if acc_number == account.owner:
-                account.balance = account.balance - ammount
+#     @balance.setter
+#     def balance(self, amount: float):
+#         if amount >= 0:
+#             self._balance = amount
+#         else:
+#             print("❌ Balance cannot be negative!")
     
-    def deposit(acc_number, ammount):
-        for account in BankAccount.accounts:
-            if acc_number == account.owner:
-                account.balance = account.balance + ammount
-        
+#     def withdraw(self, amount: float):
+#         if amount > self._balance:
+#             print(f"❌ Insufficient funds! Available: ${self._balance:,.2f}")
+#         elif amount <= 0:
+#             print("❌ Amount must be positive!")
+#         else:
+#             self._balance -= amount
+#             print(f"✅ Withdrew ${amount:,.2f}. New balance: ${self._balance:,.2f}")
+    
+#     def deposit(self, amount: float):
+#         if amount <= 0:
+#             print("❌ Amount must be positive!")
+#         else:
+#             self._balance += amount
+#             print(f"✅ Deposited ${amount:,.2f}. New balance: ${self._balance:,.2f}")
+
+#     @classmethod
+#     def show_accounts(cls):
+#         print(f"\n{'Account Number'.ljust(20)} | {'Owner'.ljust(15)} | {'Balance'.ljust(15)}\n")
+#         for account in cls.accounts:
+#             print(f"{str(account.account_number).ljust(20)} | {account.owner.ljust(15)} | {account.balance.ljust(15)}")
 
 
+# # Seed Data
+# BankAccount(45668, 'Luiz', 9877)
+# BankAccount(12345, 'Maria', 5000)
+
+# BankAccount.show_accounts()
+
+# # Operações
+# BankAccount.accounts[0].withdraw(500)
+# BankAccount.accounts[0].deposit(200)
+# BankAccount.accounts[1].withdraw(1000)
+
+# BankAccount.show_accounts()
