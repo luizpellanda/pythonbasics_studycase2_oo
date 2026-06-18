@@ -211,3 +211,104 @@
 # BankAccount.accounts[1].withdraw(1000)
 
 # BankAccount.show_accounts()
+
+
+
+# 3. Student
+# Create a Student class with:
+
+# __init__ that receives name (str), _grades (empty list by default)
+# add_grade(grade) that adds a grade (validate: 0 <= grade <= 10)
+# @property average that returns grade average (or 0 if list is empty)
+# @property status that returns "Approved" if average >= 7, otherwise "Reprobbed"
+# @classmethod top_students(all_students) that returns a list of students with average >= 8
+# __repr__ that returns Student('John', 7.5) (without quotes around name)
+
+# import statistics
+
+# class Student:
+#     students = []
+
+#     def __init__(self, name: str):
+#         self.name = name
+#         self._grades = []
+#         Student.students.append(self)
+
+#     def add_grade(self, grade: int):
+#         if not(0 <= grade <= 10):
+#             raise ValueError(f'Grade must be between 0 and 10.')
+#         self._grades.append(grade)
+
+#     @property
+#     def average(self):
+#         return statistics.mean(self._grades) if self._grades else 0
+
+#     @property
+#     def status(self):
+#         return 'Approved' if self.average >= 7 else 'Reprobbed'
+
+#     @classmethod
+#     def top_students(cls, all_students):
+#         return [student for student in all_students if student.average >= 8]
+
+#     def __repr__(self):
+#         return f"Student('{self.name}', {self.average})"
+
+
+# # Uso:
+# mario = Student('Mario')
+# mario.add_grade(8)
+# mario.add_grade(9)
+
+# chunda = Student('Chunda')
+# chunda.add_grade(6)
+
+# print(mario)  # Student('Mario', 8.5)
+# print(mario.status)  # Approved
+
+# print(Student.top_students(Student.students))  # [Student('Mario', 8.5)]
+
+
+
+
+# 4. Movie
+# Create a Movie class with:
+
+# __init__ that receives title (str), _year (int), _rating (float)
+# Validation in __init__: rating must be between 0 and 10, otherwise raise ValueError
+# @property is_classic that returns True if year <= 1980
+# @property is_highly_rated that returns True if rating >= 7.5
+# update_rating(new_rating) that updates with validation
+# A class list movies that stores all instances
+# @classmethod by_year(year) that returns all movies from a specific year
+# __str__ that returns "The Matrix (1999) - Rating: 8.7/10"
+
+class Movie:
+
+    movies = []
+
+    def __init__(self, title: str, year: int, rating: float):
+        if not(0 <= rating <= 10):
+            raise ValueError(f'ERROR. Rating must be between 0 an 10.')
+        self.title = title
+        self._year = year
+        self.rating = rating
+        Movie.movies.append(self)
+
+    @property
+    def is_classic(self):
+        return True if self._year <= 1980 else False
+    
+    @property
+    def is_highly_rated(self):
+        return True 
+    
+    
+
+    
+
+
+
+
+
+        
