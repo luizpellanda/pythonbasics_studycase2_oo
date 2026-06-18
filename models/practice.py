@@ -295,14 +295,31 @@ class Movie:
         self.rating = rating
         Movie.movies.append(self)
 
+    def __str__(self):
+        print(f'{self.name} ({self._year}) - Rating: {self.rating}/10')
+
     @property
     def is_classic(self):
         return True if self._year <= 1980 else False
     
     @property
     def is_highly_rated(self):
-        return True 
+        return True if self.rating >= 7.5 else False
     
+    def by_year(year):
+        year_list = []
+        print(f'Movies made in {year}:')
+        for movie in Movie.movies:
+            if movie._year == year:
+                add_movie = [{movie.name}, {movie._year}, {movie.rating}]
+                year_list.append(add_movie)
+                print(f'{year_list.name}')
+    
+    @classmethod
+    def show_movies(cls):
+        for movie in cls.movies:
+            print(f'{movie.name} | {movie._year} | {movie.rating}')
+
     
 
     
