@@ -283,58 +283,90 @@
 # @classmethod by_year(year) that returns all movies from a specific year
 # __str__ that returns "The Matrix (1999) - Rating: 8.7/10"
 
-class Movie:
-    movies = []
+# class Movie:
+#     movies = []
 
-    def __init__(self, title: str, year: int, rating: float):
-        if not(0 <= rating <= 10):
-            raise ValueError(f'Rating must be between 0 and 10.')
-        self.title = title
-        self._year = year
-        self._rating = rating
-        Movie.movies.append(self)
+#     def __init__(self, title: str, year: int, rating: float):
+#         if not(0 <= rating <= 10):
+#             raise ValueError(f'Rating must be between 0 and 10.')
+#         self.title = title
+#         self._year = year
+#         self._rating = rating
+#         Movie.movies.append(self)
+
+#     def __str__(self):
+#         return f'{self.title} ({self._year}) - Rating: {self._rating}/10'
+
+#     @property
+#     def is_classic(self):
+#         return self._year <= 1980
+    
+#     @property
+#     def is_highly_rated(self):
+#         return self._rating >= 7.5
+    
+#     def update_rating(self, new_rating: float):
+#         if not(0 <= new_rating <= 10):
+#             raise ValueError(f'Rating must be between 0 and 10.')
+#         self._rating = new_rating
+    
+#     @classmethod
+#     def by_year(cls, year):
+#         movies = [movie for movie in cls.movies if movie._year == year]
+#         for movie in movies:
+#             print(movie)
+#         return movies # feito com list comprehension, mas do jeito mais simplificado poderia ser assim:
+#         # year_list = []
+#         # for movie in Movie.movies:
+#         #     if movie._year == year:
+#         #         year_list.append(movie)  # Só adiciona o filme mesmo
+#         # return year_list
+
+
+# # Uso:
+# movie1 = Movie('The Matrix', 1999, 8.7)
+# movie2 = Movie('Jaws', 1975, 8.0)
+# movie3 = Movie('Inception', 2010, 8.8)
+
+# print(movie1)  # The Matrix (1999) - Rating: 8.7/10
+# print(movie1.is_classic)  # False
+# print(movie2.is_classic)  # True
+# Movie.by_year(1975)
+
+
+
+# 5. Employee
+# Create an Employee class with:
+
+# __init__ that receives name (str), _salary (float), _department (str)
+# @property formatted_salary that returns salary formatted as "$5000.00"
+# give_raise(percentage) that increases salary (validate: percentage > 0)
+# change_department(new_department) with validation (department cannot be empty/None)
+# A class variable employees (list) that stores all instances
+# @classmethod employees_by_department(department) that returns list of employees in a department
+# @classmethod average_salary_by_department(department) that calculates average salary for a department
+# __str__ that returns "John (IT) - $5000.00"
+# __eq__ that compares two employees by name
+
+class Employee:
+
+    employees = []
+
+    def __init__(self, name: str, salary: float, department: str):
+        self.name = name
+        self._salary = salary
+        self._department = department
+        Employee.employees.append(self)
 
     def __str__(self):
-        return f'{self.title} ({self._year}) - Rating: {self._rating}/10'
-
-    @property
-    def is_classic(self):
-        return self._year <= 1980
+        return f'{self.name} ({self._department} - {self._salary})'
     
     @property
-    def is_highly_rated(self):
-        return self._rating >= 7.5
-    
-    def update_rating(self, new_rating: float):
-        if not(0 <= new_rating <= 10):
-            raise ValueError(f'Rating must be between 0 and 10.')
-        self._rating = new_rating
-    
-    @classmethod
-    def by_year(cls, year):
-        movies = [movie for movie in cls.movies if movie._year == year]
-        for movie in movies:
-            print(movie)
-        return movies # feito com list comprehension, mas do jeito mais simplificado poderia ser assim:
-        # year_list = []
-        # for movie in Movie.movies:
-        #     if movie._year == year:
-        #         year_list.append(movie)  # Só adiciona o filme mesmo
-        # return year_list
+    def fromatted_salary(self):
+        return f'${self._salary:,.2f}'
 
 
-# Uso:
-movie1 = Movie('The Matrix', 1999, 8.7)
-movie2 = Movie('Jaws', 1975, 8.0)
-movie3 = Movie('Inception', 2010, 8.8)
-
-print(movie1)  # The Matrix (1999) - Rating: 8.7/10
-print(movie1.is_classic)  # False
-print(movie2.is_classic)  # True
-Movie.by_year(1975)
-
-    
-
+        
     
 
 
