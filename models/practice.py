@@ -284,41 +284,54 @@
 # __str__ that returns "The Matrix (1999) - Rating: 8.7/10"
 
 class Movie:
-
     movies = []
 
     def __init__(self, title: str, year: int, rating: float):
         if not(0 <= rating <= 10):
-            raise ValueError(f'ERROR. Rating must be between 0 an 10.')
+            raise ValueError(f'Rating must be between 0 and 10.')
         self.title = title
         self._year = year
-        self.rating = rating
+        self._rating = rating
         Movie.movies.append(self)
 
     def __str__(self):
-        print(f'{self.name} ({self._year}) - Rating: {self.rating}/10')
+        return f'{self.title} ({self._year}) - Rating: {self._rating}/10'
 
     @property
     def is_classic(self):
-        return True if self._year <= 1980 else False
+        return self._year <= 1980
     
     @property
     def is_highly_rated(self):
-        return True if self.rating >= 7.5 else False
+        return self._rating >= 7.5
     
-    def by_year(year):
-        year_list = []
-        print(f'Movies made in {year}:')
-        for movie in Movie.movies:
-            if movie._year == year:
-                add_movie = [{movie.name}, {movie._year}, {movie.rating}]
-                year_list.append(add_movie)
-                print(f'{year_list.name}')
+    def update_rating(self, new_rating: float):
+        if not(0 <= new_rating <= 10):
+            raise ValueError(f'Rating must be between 0 and 10.')
+        self._rating = new_rating
     
     @classmethod
-    def show_movies(cls):
-        for movie in cls.movies:
-            print(f'{movie.name} | {movie._year} | {movie.rating}')
+    def by_year(cls, year):
+        movies = [movie for movie in cls.movies if movie._year == year]
+        for movie in movies:
+            print(movie)
+        return movies # feito com list comprehension, mas do jeito mais simplificado poderia ser assim:
+        # year_list = []
+        # for movie in Movie.movies:
+        #     if movie._year == year:
+        #         year_list.append(movie)  # Só adiciona o filme mesmo
+        # return year_list
+
+
+# Uso:
+movie1 = Movie('The Matrix', 1999, 8.7)
+movie2 = Movie('Jaws', 1975, 8.0)
+movie3 = Movie('Inception', 2010, 8.8)
+
+print(movie1)  # The Matrix (1999) - Rating: 8.7/10
+print(movie1.is_classic)  # False
+print(movie2.is_classic)  # True
+Movie.by_year(1975)
 
     
 
