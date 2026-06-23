@@ -283,41 +283,61 @@
 # @classmethod by_year(year) that returns all movies from a specific year
 # __str__ that returns "The Matrix (1999) - Rating: 8.7/10"
 
-# class Movie:
-#     movies = []
+class Movie:
+
+    movies = []
 
     def __init__(self, title: str, year: int, rating: float):
         if not(0 <= rating <= 10):
-            raise ValueError(f'ERROR. Rating must be between 0 an 10.')
+            raise ValueError(f'Rating must be between 0 and 10.')
         self.title = title
         self._year = year
         self.rating = rating
         Movie.movies.append(self)
 
     def __str__(self):
-        print(f'{self.name} ({self._year}) - Rating: {self.rating}/10')
+        return f'{self.title} ({self._year}) - Rating: {self.rating}/10'
 
     @property
     def is_classic(self):
-        return True if self._year <= 1980 else False
+        return self._year <= 1980
     
     @property
     def is_highly_rated(self):
-        return True if self.rating >= 7.5 else False
+        return self.rating >= 7.5
     
-    def by_year(year):
-        year_list = []
-        print(f'Movies made in {year}:')
-        for movie in Movie.movies:
-            if movie._year == year:
-                add_movie = [{movie.name}, {movie._year}, {movie.rating}]
-                year_list.append(add_movie)
-                print(f'{year_list.name}')
+    def update_rating(self, new_rating: float):
+        if not(0 <= new_rating <= 10):
+            raise ValueError(f'Rating must be between 0 and 10.')
+        self.rating = new_rating
+    
+    @classmethod
+    def by_year(cls, year):
+        return [movie for movie in cls.movies if movie._year == year]
     
     @classmethod
     def show_movies(cls):
         for movie in cls.movies:
-            print(f'{movie.name} | {movie._year} | {movie.rating}')
+            print(f'{movie.title} | {movie._year} | {movie.rating}')
+
+
+Movie('Minha Imensa Rola', 2026, 7.83)
+Movie.show_movies()
+print(Movie.by_year(2026))
+
+
+# 5. Employee
+# Create an Employee class with:
+
+# __init__ that receives name (str), _salary (float), _department (str)
+# @property formatted_salary that returns salary formatted as "$5000.00"
+# give_raise(percentage) that increases salary (validate: percentage > 0)
+# change_department(new_department) with validation (department cannot be empty/None)
+# A class variable employees (list) that stores all instances
+# @classmethod employees_by_department(department) that returns list of employees in a department
+# @classmethod average_salary_by_department(department) that calculates average salary for a department
+# __str__ that returns "John (IT) - $5000.00"
+# __eq__ that compares two employees by name
 
 
         
