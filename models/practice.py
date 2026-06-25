@@ -339,9 +339,47 @@ print(Movie.by_year(2026))
 # __str__ that returns "John (IT) - $5000.00"
 # __eq__ that compares two employees by name
 
+import statistics
 
-        
+class Employee:
+
+    employees = []       
+
+    def __init__(self, name: str, salary: float, department: str):
+            self.name = name
+            self._salary = salary
+            self._department = department
+            Employee.employees.append(self)
     
+    @property
+    def salary(self):
+        return f"${self._salary:,.2f}"
+    
+    def give_raise(self, percentage: float):
+        if not(percentage < 0):
+            raise ValueError(f'Raise must be over 0%.')
+        self._salary = self._salary * ((percentage * 0.1) + 1)
+    
+    def change_department(self, new_department: str):
+        if new_department == "" or new_department == None:
+            raise ValueError(f'New department cannot be blank.')
+        self._department = new_department
+    
+    @classmethod
+    def employees_by_department(cls, department):
+        return [employee for employee in cls.employees if employee._department == department]
+    
+    @classmethod
+    def average_salary_by_department(cls, department):
+        return statistics.mean(cls._salary) if cls._department == department else f'Invalid department.'
+    
+    def __str__(self):
+        return f'{self.name} ({self._department}) - ${self._salary}.'
+    @property
+#     def average(self):
+#         return statistics.mean(self._grades) if self._grades else 0 ("John (IT) - $5000.00")
+
+
 
 
 
