@@ -283,47 +283,47 @@
 # @classmethod by_year(year) that returns all movies from a specific year
 # __str__ that returns "The Matrix (1999) - Rating: 8.7/10"
 
-class Movie:
+# class Movie:
 
-    movies = []
+#     movies = []
 
-    def __init__(self, title: str, year: int, rating: float):
-        if not(0 <= rating <= 10):
-            raise ValueError(f'Rating must be between 0 and 10.')
-        self.title = title
-        self._year = year
-        self.rating = rating
-        Movie.movies.append(self)
+#     def __init__(self, title: str, year: int, rating: float):
+#         if not(0 <= rating <= 10):
+#             raise ValueError(f'Rating must be between 0 and 10.')
+#         self.title = title
+#         self._year = year
+#         self.rating = rating
+#         Movie.movies.append(self)
 
-    def __str__(self):
-        return f'{self.title} ({self._year}) - Rating: {self.rating}/10'
+#     def __str__(self):
+#         return f'{self.title} ({self._year}) - Rating: {self.rating}/10'
 
-    @property
-    def is_classic(self):
-        return self._year <= 1980
+#     @property
+#     def is_classic(self):
+#         return self._year <= 1980
     
-    @property
-    def is_highly_rated(self):
-        return self.rating >= 7.5
+#     @property
+#     def is_highly_rated(self):
+#         return self.rating >= 7.5
     
-    def update_rating(self, new_rating: float):
-        if not(0 <= new_rating <= 10):
-            raise ValueError(f'Rating must be between 0 and 10.')
-        self.rating = new_rating
+#     def update_rating(self, new_rating: float):
+#         if not(0 <= new_rating <= 10):
+#             raise ValueError(f'Rating must be between 0 and 10.')
+#         self.rating = new_rating
     
-    @classmethod
-    def by_year(cls, year):
-        return [movie for movie in cls.movies if movie._year == year]
+#     @classmethod
+#     def by_year(cls, year):
+#         return [movie for movie in cls.movies if movie._year == year]
     
-    @classmethod
-    def show_movies(cls):
-        for movie in cls.movies:
-            print(f'{movie.title} | {movie._year} | {movie.rating}')
+#     @classmethod
+#     def show_movies(cls):
+#         for movie in cls.movies:
+#             print(f'{movie.title} | {movie._year} | {movie.rating}')
 
 
-Movie('Minha Imensa Rola', 2026, 7.83)
-Movie.show_movies()
-print(Movie.by_year(2026))
+# Movie('Minha Imensa Rola', 2026, 7.83)
+# Movie.show_movies()
+# print(Movie.by_year(2026))
 
 
 # 5. Employee
@@ -346,22 +346,22 @@ class Employee:
     employees = []       
 
     def __init__(self, name: str, salary: float, department: str):
-            self.name = name
-            self._salary = salary
-            self._department = department
-            Employee.employees.append(self)
+        self.name = name
+        self._salary = salary
+        self._department = department
+        Employee.employees.append(self)
     
     @property
-    def salary(self):
+    def formatted_salary(self):
         return f"${self._salary:,.2f}"
     
     def give_raise(self, percentage: float):
-        if not(percentage < 0):
+        if percentage <= 0:
             raise ValueError(f'Raise must be over 0%.')
-        self._salary = self._salary * ((percentage * 0.1) + 1)
+        self._salary = self._salary * (1 + percentage / 100)
     
     def change_department(self, new_department: str):
-        if new_department == "" or new_department == None:
+        if not new_department:
             raise ValueError(f'New department cannot be blank.')
         self._department = new_department
     
@@ -371,18 +371,48 @@ class Employee:
     
     @classmethod
     def average_salary_by_department(cls, department):
-        return statistics.mean(cls._salary) if cls._department == department else f'Invalid department.'
+        employees_in_dept = cls.employees_by_department(department)
+        if not employees_in_dept:
+            return 0
+        salaries = [emp._salary for emp in employees_in_dept]
+        return statistics.mean(salaries)
     
     def __str__(self):
-        return f'{self.name} ({self._department}) - ${self._salary}.'
-    @property
-#     def average(self):
-#         return statistics.mean(self._grades) if self._grades else 0 ("John (IT) - $5000.00")
+        return f'{self.name} ({self._department}) - {self.formatted_salary}'
+    
+    def __eq__(self, other):
+        if not isinstance(other, Employee):
+            return False
+        return self.name == other.name
 
 
+# Teste
+emp1 = Employee('João', 5000, 'TI')
+emp2 = Employee('Maria', 6000, 'TI')
+emp3 = Employee('Pedro', 4500, 'RH')
+emp4 = Employee('João', 5000, 'TI')
 
+print(emp1)
+print(emp2)
+print(emp3)
+print()
 
+print('Employees in TI:')
+for emp in Employee.employees_by_department('TI'):
+    print(emp)
+print()
 
+print(f'Average salary in TI: ${Employee.average_salary_by_department("TI"):,.2f}')
+print(f'Average salary in RH: ${Employee.average_salary_by_department("RH"):,.2f}')
+print()
 
+emp1.give_raise(10)
+print(f'After 10% raise: {emp1}')
+print()
 
-        
+emp2.change_department('Financeiro')
+print(f'After change department: {emp2}')
+print()
+
+print(f'emp1 == emp4 (mesmo nome)? {emp1 == emp4}')
+print(f'emp1 == emp2 (nomes diferentes)? {emp1 == emp2}')
