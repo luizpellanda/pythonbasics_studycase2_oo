@@ -339,80 +339,156 @@
 # __str__ that returns "John (IT) - $5000.00"
 # __eq__ that compares two employees by name
 
-import statistics
+# import statistics
 
-class Employee:
+# class Employee:
 
-    employees = []       
+#     employees = []       
 
-    def __init__(self, name: str, salary: float, department: str):
-        self.name = name
-        self._salary = salary
-        self._department = department
-        Employee.employees.append(self)
+#     def __init__(self, name: str, salary: float, department: str):
+#         self.name = name
+#         self._salary = salary
+#         self._department = department
+#         Employee.employees.append(self)
+    
+#     @property
+#     def formatted_salary(self):
+#         return f"${self._salary:,.2f}"
+    
+#     def give_raise(self, percentage: float):
+#         if percentage <= 0:
+#             raise ValueError(f'Raise must be over 0%.')
+#         self._salary = self._salary * (1 + percentage / 100)
+    
+#     def change_department(self, new_department: str):
+#         if not new_department:
+#             raise ValueError(f'New department cannot be blank.')
+#         self._department = new_department
+    
+#     @classmethod
+#     def employees_by_department(cls, department):
+#         return [employee for employee in cls.employees if employee._department == department]
+    
+#     @classmethod
+#     def average_salary_by_department(cls, department):
+#         employees_in_dept = cls.employees_by_department(department)
+#         if not employees_in_dept:
+#             return 0
+#         salaries = [emp._salary for emp in employees_in_dept]
+#         return statistics.mean(salaries)
+    
+#     def __str__(self):
+#         return f'{self.name} ({self._department}) - {self.formatted_salary}'
+    
+#     def __eq__(self, other):
+#         if not isinstance(other, Employee):
+#             return False
+#         return self.name == other.name
+
+
+# # Teste
+# emp1 = Employee('João', 5000, 'TI')
+# emp2 = Employee('Maria', 6000, 'TI')
+# emp3 = Employee('Pedro', 4500, 'RH')
+# emp4 = Employee('João', 5000, 'TI')
+
+# print(emp1)
+# print(emp2)
+# print(emp3)
+# print()
+
+# print('Employees in TI:')
+# for emp in Employee.employees_by_department('TI'):
+#     print(emp)
+# print()
+
+# print(f'Average salary in TI: ${Employee.average_salary_by_department("TI"):,.2f}')
+# print(f'Average salary in RH: ${Employee.average_salary_by_department("RH"):,.2f}')
+# print()
+
+# emp1.give_raise(10)
+# print(f'After 10% raise: {emp1}')
+# print()
+
+# emp2.change_department('Financeiro')
+# print(f'After change department: {emp2}')
+# print()
+
+# print(f'emp1 == emp4 (mesmo nome)? {emp1 == emp4}')
+# print(f'emp1 == emp2 (nomes diferentes)? {emp1 == emp2}')
+
+
+
+# Exercise 1 — Elevator (warm-up + input)
+# Create an Elevator class with:
+
+# __init__ that receives _current_floor (int, default 0) and _max_floor (int)
+# Validation: _max_floor must be > 0
+# go_up(floors) — moves up by floors; validate floors > 0 AND that it doesn't go above _max_floor, otherwise raise ValueError
+# go_down(floors) — moves down by floors; validate floors > 0 AND that it doesn't go below 0 (ground floor), otherwise raise ValueError
+# @property location that returns a string like "Currently on floor 3 of 10"
+# __str__ that returns the same idea
+
+# Interactive part: a loop with a menu where the user types: 1 (go up), 2 (go down), 3 (check current floor), 4 (exit). Use try/except to catch the ValueError and show the message without crashing the program.
+
+class Elevator:
+
+    def __init__(self, current_floor: int = 0, max_floor: int = 0):
+        if not(max_floor > 0):
+            raise ValueError(f'Max. floor needs to be more than 0.')
+        self._current_floor = current_floor
+        self._max_floor = max_floor
+
+    def __str__(self):
+        return f'Currently on floor {self._current_floor} of {self._max_floor}.'
     
     @property
-    def formatted_salary(self):
-        return f"${self._salary:,.2f}"
+    def location(self):
+        return f'Currently on floor {self._current_floor} of {self._max_floor}.'
     
-    def give_raise(self, percentage: float):
-        if percentage <= 0:
-            raise ValueError(f'Raise must be over 0%.')
-        self._salary = self._salary * (1 + percentage / 100)
+    def go_up(self, floors: int):
+        if floors <= 0:
+            raise ValueError(f'Please type in a positive number.')
+        if self._current_floor + floors > self._max_floor:
+            raise ValueError(f'Cannot go above floor {self._max_floor}.')
+        self._current_floor = self._current_floor + floors
+
+    def go_down(self, floors: int):
+        if floors <= 0:
+            raise ValueError(f'Please type in a positive number.')
+        if self._current_floor - floors < 0:
+            raise ValueError(f'Cannot go below floor 0 (ground floor).')
+        self._current_floor = self._current_floor - floors
+
+
+elevator = Elevator(0, 10)
+
+while True:
+    print(f'\nElevator\n')
+    print(f'1. Go Up')
+    print(f'2. Go Down')
+    print(f'3. Current Floor')
+    print(f'4. Exit\n')
+
+    try:
+        user_choice = int(input(f'Please type in your option: '))
+
+        match user_choice:
+            case 1:
+                up = int(input(f'Type in the number of floors you want to go up: '))
+                elevator.go_up(up)
+                print(elevator.location)
+            case 2:
+                down = int(input(f'Type in the number of floors you want to go down: '))
+                elevator.go_down(down)
+                print(elevator.location)
+            case 3:
+                print(elevator.location)
+            case 4:
+                print('See ya!')
+                break
+            case _:
+                print('Invalid option. Please choose 1-4.')
+    except ValueError as error:
+        print(f'Error: {error}')
     
-    def change_department(self, new_department: str):
-        if not new_department:
-            raise ValueError(f'New department cannot be blank.')
-        self._department = new_department
-    
-    @classmethod
-    def employees_by_department(cls, department):
-        return [employee for employee in cls.employees if employee._department == department]
-    
-    @classmethod
-    def average_salary_by_department(cls, department):
-        employees_in_dept = cls.employees_by_department(department)
-        if not employees_in_dept:
-            return 0
-        salaries = [emp._salary for emp in employees_in_dept]
-        return statistics.mean(salaries)
-    
-    def __str__(self):
-        return f'{self.name} ({self._department}) - {self.formatted_salary}'
-    
-    def __eq__(self, other):
-        if not isinstance(other, Employee):
-            return False
-        return self.name == other.name
-
-
-# Teste
-emp1 = Employee('João', 5000, 'TI')
-emp2 = Employee('Maria', 6000, 'TI')
-emp3 = Employee('Pedro', 4500, 'RH')
-emp4 = Employee('João', 5000, 'TI')
-
-print(emp1)
-print(emp2)
-print(emp3)
-print()
-
-print('Employees in TI:')
-for emp in Employee.employees_by_department('TI'):
-    print(emp)
-print()
-
-print(f'Average salary in TI: ${Employee.average_salary_by_department("TI"):,.2f}')
-print(f'Average salary in RH: ${Employee.average_salary_by_department("RH"):,.2f}')
-print()
-
-emp1.give_raise(10)
-print(f'After 10% raise: {emp1}')
-print()
-
-emp2.change_department('Financeiro')
-print(f'After change department: {emp2}')
-print()
-
-print(f'emp1 == emp4 (mesmo nome)? {emp1 == emp4}')
-print(f'emp1 == emp2 (nomes diferentes)? {emp1 == emp2}')
