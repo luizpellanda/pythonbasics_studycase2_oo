@@ -431,98 +431,99 @@
 
 # Interactive part: a loop with a menu where the user types: 1 (go up), 2 (go down), 3 (check current floor), 4 (exit). Use try/except to catch the ValueError and show the message without crashing the program.
 
-class Elevator:
+# class Elevator:
 
-    def __init__(self, current_floor: int = 0, max_floor: int = 0):
-        if not(max_floor > 0):
-            raise ValueError(f'Max. floor needs to be more than 0.')
-        self._current_floor = current_floor
-        self._max_floor = max_floor
+#     def __init__(self, current_floor: int = 0, max_floor: int = 0):
+#         if not(max_floor > 0):
+#             raise ValueError(f'Max. floor needs to be more than 0.')
+#         self._current_floor = current_floor
+#         self._max_floor = max_floor
 
-    def __str__(self):
-        return f'Currently on floor {self._current_floor} of {self._max_floor}.'
+#     def __str__(self):
+#         return f'Currently on floor {self._current_floor} of {self._max_floor}.'
     
-    @property
-    def location(self):
-        return f'Currently on floor {self._current_floor} of {self._max_floor}.'
+#     @property
+#     def location(self):
+#         return f'Currently on floor {self._current_floor} of {self._max_floor}.'
     
-    def go_up(self, floors: int):
-        if floors <= 0:
-            raise ValueError(f'Please type in a positive number.')
-        if self._current_floor + floors > self._max_floor:
-            raise ValueError(f'Cannot go above floor {self._max_floor}.')
-        self._current_floor = self._current_floor + floors
+#     def go_up(self, floors: int):
+#         if floors <= 0:
+#             raise ValueError(f'Please type in a positive number.')
+#         if self._current_floor + floors > self._max_floor:
+#             raise ValueError(f'Cannot go above floor {self._max_floor}.')
+#         self._current_floor = self._current_floor + floors
 
-    def go_down(self, floors: int):
-        if floors <= 0:
-            raise ValueError(f'Please type in a positive number.')
-        if self._current_floor - floors < 0:
-            raise ValueError(f'Cannot go below floor 0 (ground floor).')
-        self._current_floor = self._current_floor - floors
+#     def go_down(self, floors: int):
+#         if floors <= 0:
+#             raise ValueError(f'Please type in a positive number.')
+#         if self._current_floor - floors < 0:
+#             raise ValueError(f'Cannot go below floor 0 (ground floor).')
+#         self._current_floor = self._current_floor - floors
 
 
-elevator = Elevator(0, 10)
+# elevator = Elevator(0, 10)
 
-while True:
-    print(f'\nElevator\n')
-    print(f'1. Go Up')
-    print(f'2. Go Down')
-    print(f'3. Current Floor')
-    print(f'4. Exit\n')
+# while True:
+#     print(f'\nElevator\n')
+#     print(f'1. Go Up')
+#     print(f'2. Go Down')
+#     print(f'3. Current Floor')
+#     print(f'4. Exit\n')
 
-    try:
-        user_choice = int(input(f'Please type in your option: '))
+#     try:
+#         user_choice = int(input(f'Please type in your option: '))
 
-        match user_choice:
-            case 1:
-                up = int(input(f'Type in the number of floors you want to go up: '))
-                elevator.go_up(up)
-                print(elevator.location)
-            case 2:
-                down = int(input(f'Type in the number of floors you want to go down: '))
-                elevator.go_down(down)
-                print(elevator.location)
-            case 3:
-                print(elevator.location)
-            case 4:
-                print('See ya!')
-                break
-            case _:
-                print('Invalid option. Please choose 1-4.')
-    except ValueError as error:
-        print(f'Error: {error}')
+#         match user_choice:
+#             case 1:
+#                 up = int(input(f'Type in the number of floors you want to go up: '))
+#                 elevator.go_up(up)
+#                 print(elevator.location)
+#             case 2:
+#                 down = int(input(f'Type in the number of floors you want to go down: '))
+#                 elevator.go_down(down)
+#                 print(elevator.location)
+#             case 3:
+#                 print(elevator.location)
+#             case 4:
+#                 print('See ya!')
+#                 break
+#             case _:
+#                 print('Invalid option. Please choose 1-4.')
+#     except ValueError as error:
+#         print(f'Error: {error}')
     
 
-# print 1 print(rex.name) 
-# imprime Rex
-# print 2 print(bella.name) 
-# imprime Bella
-# # print 3 print(rex.species) 
-# erro
-# # print 4 print(bella.species) 
-# erro
-# # print 5 print(Dog.pack) 
-# imprime ["Rex", "Bella"]
-# # print 6 rex.name = "Rex Jr." print(rex.name) 
-# imprime Rex Jr
-# # print 7 print(bella.name) 
-# imprime Bella
-# # print 8 print(Dog.species)
-# imprime Canis familiaris
 
-class Dog:
-    species = "Canis familiaris"   # class variable
-    pack = []                       # class variable
 
-    def __init__(self, name):
-        self.name = name            # instance variable
-        Dog.pack.append(name)
+# Create a Book class with:
 
-class Dog:
-    pack = []                       # class variable
+# __init__ that receives title (str), _author (str), _pages (int), _available (bool, default True)
+# Validation: _pages must be > 0
+# borrow() — if available, mark as unavailable; otherwise raise ValueError("Book already borrowed")
+# return_book() — mark as available
+# Class variable library (list) that stores all instances
+# @classmethod available_books() that returns only the available books
+# @classmethod find_by_author(author) that returns a list of books by a given author
+# An appropriate __str__
 
-    def __init__(self, name, species: str = 'Canis Familiaris'):
-        self.name = name            # instance variable
-        self.species = species
-        Dog.pack.append(name)
+# Interactive part: menu where the user can register a new book (entering title, author, pages), borrow by title, return, and list available books.
         
+class Book:
+
+    books = []
+
+    def __init__(self, title: str, author: str, pages: int, available: bool = True):
+        if not(pages > 0):
+            raise ValueError('A book needs to have more than 0 pages')
+        self.title = title
+        self._author = author
+        self._pages = pages
+        self._available = available
+        Book.books.append(self)
+
+    def borrow(self, wanted_book):
+        for book in Book.books:
+            if wanted_book == book.name:
+                book.available = False if book.available else print('Book is not available.')
+            else:
+                print(f'Book {wanted_book} not found.')
