@@ -492,3 +492,37 @@ while True:
     except ValueError as error:
         print(f'Error: {error}')
     
+
+# print 1 print(rex.name) 
+# imprime Rex
+# print 2 print(bella.name) 
+# imprime Bella
+# # print 3 print(rex.species) 
+# erro
+# # print 4 print(bella.species) 
+# erro
+# # print 5 print(Dog.pack) 
+# imprime ["Rex", "Bella"]
+# # print 6 rex.name = "Rex Jr." print(rex.name) 
+# imprime Rex Jr
+# # print 7 print(bella.name) 
+# imprime Bella
+# # print 8 print(Dog.species)
+# imprime Canis familiaris
+
+class Dog:
+    species = "Canis familiaris"   # class variable
+    pack = []                       # class variable
+
+    def __init__(self, name):
+        self.name = name            # instance variable
+        Dog.pack.append(name)
+
+class Dog:
+    pack = []                       # class variable
+
+    def __init__(self, name, species: str = 'Canis Familiaris'):
+        self.name = name            # instance variable
+        self.species = species
+        Dog.pack.append(name)
+        
